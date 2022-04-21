@@ -165,8 +165,8 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         resConfigs 'en', 'bg', 'de', 'en-rGB', 'es', 'fr', 'hr-rHR', 'in', 'it', 'iw', 'ja', 'ko', 'lt', 'nl', 'pl', 'pt-rBR', 'pt-rPT', 'ru', 'tr', 'zh', 'zh-rTW'
 
-        versionCode 3304
-        versionName "3.5.1.3"
+        versionCode 3308
+        versionName "3.5.2"
 
         targetSdkVersion 32
 
