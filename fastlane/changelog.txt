@@ -1,11 +1,9 @@
-- New unsaved changes warning for tasks
-- New design for the Gem screen
-- New design for Starting Objectives
-- New private messages will show without needing to scroll
-- Purchased Backgrounds show correctly
-- Fixes Armoire error when you don’t have enough Gold
-- Fixes issue where the wrong task filters would show sometimes
-- Gift subs can be properly selected
-- Ended Challenges will go away properly
-- External links work in Guilds
-- Proper 12h/24h support
+What's new in this update:
+-Improves reminders so they deliver on time more reliably
+ -Only due Dailies will show on app launch if that filter is set
+-Adds external link support in chats, tasks, Guilds, Challenges, and Parties
+-Improves Quest start flow when you aren’t already in a Party 
+-Food will no longer show repeating text
+-Boss animations now load properly
+-Fixes an issue where Gems couldn’t be bought due to already owning them
+-Fixes an issue where the tutorial text would keep repeating
