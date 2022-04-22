@@ -138,4 +138,8 @@ class AppConfigManager(contentRepository: ContentRepository?) {
     fun enableTeamBoards(): Boolean {
         return remoteConfig.getBoolean("enableTeamBoards")
     }
+
+    fun hideFacebook(): Boolean {
+        return remoteConfig.getBoolean("hideFacebook")
+    }
 }
