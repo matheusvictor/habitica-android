@@ -113,7 +113,10 @@
                     android:gravity="center_horizontal"
                     android:padding="@dimen/spacing_small"
                     android:text="@string/internal_error_api"
-                    android:visibility="gone"/>
+                    app:drawableStartCompat="@drawable/ic_warning_black"
+                    app:drawableTint="@color/maroon_500"
+                    android:drawablePadding="4dp"/>
+                </FrameLayout>
             </com.google.android.material.appbar.AppBarLayout>
 
             <RelativeLayout
