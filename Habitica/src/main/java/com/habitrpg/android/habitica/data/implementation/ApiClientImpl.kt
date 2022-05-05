@@ -58,13 +58,6 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableTransformer
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
-import java.io.IOException
-import java.net.SocketException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
-import java.util.GregorianCalendar
-import java.util.concurrent.TimeUnit
-import javax.net.ssl.SSLException
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -73,6 +66,13 @@ import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
+import java.net.SocketException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
+import java.util.GregorianCalendar
+import java.util.concurrent.TimeUnit
+import javax.net.ssl.SSLException
 
 class ApiClientImpl(
     private val gsonConverter: GsonConverterFactory,
@@ -782,7 +782,9 @@ class ApiClientImpl(
     override fun updateEmail(newEmail: String, password: String): Flowable<Void> {
         val updateObject = HashMap<String, String>()
         updateObject["newEmail"] = newEmail
-        updateObject["password"] = password
+        if (password.isNotBlank()) {
+            updateObject["password"] = password
+        }
         return apiService.updateEmail(updateObject).compose(configureApiCallObserver())
     }
 

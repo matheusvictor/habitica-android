@@ -135,17 +135,13 @@ class AccountPreferenceFragment :
             "username" -> showLoginNameDialog()
             "confirm_username" -> showConfirmUsernameDialog()
             "email" -> {
-                if (user?.authentication?.hasPassword == true) {
-                    showEmailDialog()
-                } else {
-                    showAddPasswordDialog(true)
-                }
+                showEmailDialog(user?.authentication?.hasPassword == true)
             }
             "password" -> {
                 if (user?.authentication?.hasPassword == true) {
                     showChangePasswordDialog()
                 } else {
-                    showAddPasswordDialog(true)
+                    showAddPasswordDialog(user?.authentication?.localAuthentication?.email == null)
                 }
             }
             "UserID" -> {
@@ -326,9 +322,9 @@ class AccountPreferenceFragment :
                 emailEditText?.showErrorIfNecessary()
                 passwordEditText?.showErrorIfNecessary()
                 passwordRepeatEditText?.showErrorIfNecessary()
-                if (emailEditText?.isValid != true || passwordEditText?.isValid != true || passwordRepeatEditText?.isValid != true) return@addButton
-                val email = if (showEmail) emailEditText.text else user?.authentication?.findFirstSocialEmail()
-                apiClient.registerUser(user?.username ?: "", email ?: "", passwordEditText.text ?: "", passwordRepeatEditText?.text ?: "")
+                if ((showEmail && emailEditText?.isValid != true) || passwordEditText?.isValid != true || passwordRepeatEditText?.isValid != true) return@addButton
+                val email = if (showEmail) emailEditText?.text else user?.authentication?.localAuthentication?.email ?: user?.authentication?.findFirstSocialEmail()
+                apiClient.registerUser(user?.username ?: "", email ?: "", passwordEditText.text ?: "", passwordRepeatEditText.text ?: "")
                     .flatMap { userRepository.retrieveUser(true, true) }
                     .subscribe(
                         {
@@ -348,7 +344,7 @@ class AccountPreferenceFragment :
         }
     }
 
-    private fun showEmailDialog() {
+    private fun showEmailDialog(showPassword: Boolean) {
         val inflater = context?.layoutInflater
         val view = inflater?.inflate(R.layout.dialog_edittext_confirm_pw, null)
         val emailEditText = view?.findViewById<ValidatingEditText>(R.id.email_edit_text)
@@ -357,6 +353,7 @@ class AccountPreferenceFragment :
         emailEditText?.errorText = getString(R.string.email_invalid)
         view?.findViewById<TextInputLayout>(R.id.input_layout)?.hint = context?.getString(R.string.email)
         val passwordEditText = view?.findViewById<ValidatingEditText>(R.id.password_edit_text)
+        passwordEditText?.visibility = if (showPassword) View.VISIBLE else View.GONE
         context?.let { context ->
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.change_email)
