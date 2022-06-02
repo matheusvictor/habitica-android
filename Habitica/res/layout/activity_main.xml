@@ -116,7 +116,6 @@
                     app:drawableStartCompat="@drawable/ic_warning_black"
                     app:drawableTint="@color/maroon_500"
                     android:drawablePadding="4dp"/>
-                </FrameLayout>
             </com.google.android.material.appbar.AppBarLayout>
 
             <RelativeLayout
