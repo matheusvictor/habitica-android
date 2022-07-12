@@ -40,9 +40,7 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientS
 import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -182,7 +180,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.inverted_background))
         } else if (shopItem.event?.end != null) {
             limitedTextViewJob?.cancel()
-            limitedTextViewJob = GlobalScope.launch(Dispatchers.Main) {
+            limitedTextViewJob = MainScope().launch(Dispatchers.Main) {
                 limitedTextView.visibility = View.VISIBLE
                 while (shopItem.event?.end?.after(Date()) == true) {
                     limitedTextView.text = context.getString(R.string.available_for, shopItem.event?.end?.getShortRemainingString())
@@ -304,7 +302,6 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         super.dismiss()
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     private fun onBuyButtonClicked() {
         if (shopItem.isValid && !shopItem.locked) {
             val gemsLeft = if (shopItem.limitedNumberLeft != null) shopItem.limitedNumberLeft else 0
